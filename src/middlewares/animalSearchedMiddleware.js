@@ -22,7 +22,6 @@ const animalSearchedMiddleware = (store) => (next) => (action) => {
         })
         .catch((error) => {
           // handle error
-          console.log(error);
           store.dispatch(saveFetchedAnimals('error'));
         });
 
@@ -36,7 +35,6 @@ const animalSearchedMiddleware = (store) => (next) => (action) => {
         })
         .catch((error) => {
           // handle error
-          console.log(error);
         });
 
       break;

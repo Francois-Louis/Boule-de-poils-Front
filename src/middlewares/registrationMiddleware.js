@@ -18,7 +18,6 @@ const registrationMiddleware = (store) => (next) => (action) => {
           store.dispatch(registrationSucces(true));
         })
         .catch((error) => {
-          console.log(error);
           store.dispatch(registrationSucces(false));
         });
       break;

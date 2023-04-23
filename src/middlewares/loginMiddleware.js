@@ -12,7 +12,6 @@ const loginMiddleware = (store) => (next) => (action) => {
           store.dispatch(loginSucces(response.data.token));
         })
         .catch((error) => {
-          console.log(error);
           store.dispatch(loginFailure());
         });
       break;

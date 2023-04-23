@@ -16,7 +16,6 @@ const formMiddleware = (store) => (next) => (action) => {
         })
         .catch((error) => {
           // handle error
-          console.log(error);
         });
 
       break;
@@ -29,7 +28,6 @@ const formMiddleware = (store) => (next) => (action) => {
         })
         .catch((error) => {
           // handle error
-          console.log(error);
         });
       break;
     default:

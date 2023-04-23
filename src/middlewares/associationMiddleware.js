@@ -13,7 +13,6 @@ const associationMiddleware = (store) => (next) => (action) => {
 
         .catch((error) => {
           // handle error
-          console.log(error);
         });
       break;
     default:
