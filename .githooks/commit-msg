@@ -1,0 +1,22 @@
+#!/bin/sh
+# Refuse un message de commit hors Conventional Commits ou portant une cosignature ou une mention d'IA.
+# Activation après chaque clone : git config core.hooksPath .githooks
+
+msg=$(grep -v '^#' "$1")
+first_line=$(printf '%s\n' "$msg" | sed -n '/./{p;q;}')
+
+case "$first_line" in
+  "Merge "*|"Revert "*|"fixup! "*|"squash! "*|"amend! "*) ;;
+  *)
+    if ! printf '%s\n' "$first_line" | grep -Eq '^(feat|fix|refactor|perf|test|docs|style|build|ci|chore|revert)(\([a-z0-9-]+\))?!?: .+'; then
+      echo "commit-msg : la première ligne doit suivre Conventional Commits, par exemple « feat(catalogue): ajoute la recherche par distance »." >&2
+      exit 1
+    fi
+    ;;
+esac
+
+ai='claude|anthropic|copilot|openai|chatgpt|codex|gemini|cursor|windsurf|devin|aider'
+if printf '%s\n' "$msg" | grep -Eiq "^(co-authored-by|assisted-by|generated-by):.*($ai)|(generated|written|made) (with|by) .*($ai)|(généré|écrit|rédigé) (avec|par) .*($ai|\bia\b)|🤖"; then
+  echo "commit-msg : aucune cosignature ni mention d'IA dans les commits." >&2
+  exit 1
+fi
